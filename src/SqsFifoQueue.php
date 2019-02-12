@@ -148,6 +148,10 @@ class SqsFifoQueue extends SqsQueue
     {
         $payload = parent::createPayload($job, $data, $queue);
 
+        if (method_exists(get_class($job), 'getPayload')) {
+            return $job->getPayload();
+        }
+
         if (!is_object($job)) {
             return $payload;
         }
